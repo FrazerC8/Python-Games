@@ -14,24 +14,63 @@ def clear():
     for i in range(15):
         print()
 
-grid = [[' ' for i in range(20)] for p in range(10)]
-population=[character(species_types[random.randint(0,25)],random.randint(0,100),random.randint(0,20),random.randint(0,10)) for i in range(10)]
+#creates grid
+grid = [[" " for i in range(20)] for p in range(10)]
+#fills population
+population=[character(species_types[random.randint(0,25)],random.randint(0,100),random.randint(0,19),random.randint(0,9)) for i in range(10)]
+#adds population to grid
+for i in population:
+    while True:
+        if grid[i.pos_y][i.pos_x]==" ":
+            grid[i.pos_y][i.pos_x]=i
+            break
+        else:
+            i.pos_x,i.pos_y=random.randint(0,19),random.randint(0,9)
+        
 
 for i in range (len(population)):
     print(population[i].details())
 
-#wip fix this
+
+#display grid
 while True:
+    for i in population:
+        grid[i.pos_y][i.pos_x]=" "
+        while True:
+            move=random.randint(0,3)
+            if move==0 and i.pos_x>0:
+                if grid[i.pos_y][i.pos_x-1]==" ":
+                    i.pos_x-=1
+                    break
+            elif move==1 and i.pos_x<19:
+                if grid[i.pos_y][i.pos_x+1]==" ":
+                    i.pos_x+=1
+                    break
+            elif move==2 and i.pos_y>0:
+                if grid[i.pos_y-1][i.pos_x]==" ":
+                    i.pos_y-=1
+                    break
+            elif move==3 and i.pos_y<9:
+                if grid[i.pos_y+1][i.pos_x]==" ":
+                    i.pos_y+=1
+                    break
+        grid[i.pos_y][i.pos_x]=i
+
     clear()
     print ("▓"*(len(grid[0])+2))
+
     for iy in range (0,len(grid)):
         line=""
         for ix in range (0,len(grid[iy])):
-            line+=grid[iy][ix]
+            if grid[iy][ix]==" ":
+                line+=" "
+            else:
+                line+=grid[iy][ix].name
         print("▓"+line+"▓")
+
     print ("▓"*(len(grid[0])+2))
 
-    input("nex step:")
+    input("next step:")
 
 
 
